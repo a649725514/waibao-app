@@ -1,0 +1,16 @@
+{
+    "CONTACT":[
+        {
+            "company":"A外包公司",
+            "name":"部长",
+            "name_en":"Buzhang",
+            "path":"require('../pic/03.png')"
+        },
+        {
+            "company":"A外包公司",
+            "name":"陈城立",
+            "name_en":"Chenchengli",
+            "path":"require('../pic/04.png')"
+        }
+    ]
+}
