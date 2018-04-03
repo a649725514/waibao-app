@@ -6,7 +6,7 @@ import {
 import { Navigator } from 'react-native-deprecated-custom-components';
 import PropTypes from 'prop-types';
 //import Main from './pages/main';
-import Main from './pages/main';
+import Main from './pages/login';
 
 export default class HelloWorld extends React.Component {
 
