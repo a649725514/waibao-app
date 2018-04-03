@@ -20,6 +20,8 @@ import Personmsg from '../components/personmsg';
 import Process from '../components/process';
 import Selfsay from '../components/selfsay';
 import Notice from '../components/notice';
+import Comment from '../components/comment';
+import Task from './task';
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 const rowHeight = 40;
@@ -34,6 +36,15 @@ export default class Project extends Component {
         const {navigator} = this.props;
             if(navigator){
             navigator.pop();
+        }
+    }
+    Jump_to_task () {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'Task',
+                component: Task
+            });
         }
     }
     render() {
@@ -68,6 +79,7 @@ export default class Project extends Component {
                         <Bolddivider />
                         <Notice />
                         <Bolddivider />
+                        <Comment press={this.Jump_to_task.bind(this)} />
                     </ScrollView>
                 </View>
             </View>
