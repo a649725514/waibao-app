@@ -61,6 +61,6 @@ Selfcard.propTypes = {
 }
 Selfcard.defaultProps = {
     name:'王小红',
-    source:require('../pic/02.png'),
+    source:{uri: 'https://pic1.zhimg.com/v2-0d0ef2e9e22526a94fd2f3c2dcc108a6_xll.jpg'},
     company:'D外包公司'
 }

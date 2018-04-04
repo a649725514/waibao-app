@@ -15,92 +15,92 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 export default class Personmsg extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            
+
         };
     }
-    
+
     render() {
         return (
             <View style={{
                 width: width,
                 height: 70,
-                backgroundColor:'white',
-                flexDirection:'row',
+                backgroundColor: 'white',
+                flexDirection: 'row',
             }}>
                 <View style={{
-                    width:70,
-                    height:70,
-                    justifyContent:'center',
-                    alignItems:'center'
+                    width: 70,
+                    height: 70,
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     <Image style={{
-                        width:50,
-                        height:50,
-                        borderRadius:25,
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
                     }} source={require('../pic/01.png')}></Image>
                 </View>
                 <View style={{
-                    width:width-70,
-                    height:70,
+                    width: width - 70,
+                    height: 70,
                 }}>
                     <View style={{
-                        width:width-70,
-                        height:35,
-                        flexDirection:'row',
+                        width: width - 70,
+                        height: 35,
+                        flexDirection: 'row',
                     }}>
                         <View style={{
-                            width:width/2-35,
-                            height:35,
-                            flexDirection:'row',
-                            justifyContent:'flex-start',
-                            alignItems:'flex-end'
+                            width: width / 2 - 35,
+                            height: 35,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-end'
                         }}>
-                            <Text style={{color:'black',fontSize:15,marginLeft:10}}>{'甲'}</Text>
+                            <Text style={{ color: 'black', fontSize: 15, marginLeft: 10 }}>{this.props.publisher.name}</Text>
                         </View>
                         <View style={{
-                            width:width/2-35,
-                            height:35,
-                            flexDirection:'row',
-                            justifyContent:'flex-start',
-                            alignItems:'flex-end'
+                            width: width / 2 - 35,
+                            height: 35,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-end'
                         }}>
                             <Image style={{
-                                marginRight:10,
-                                marginBottom:3
+                                marginRight: 10,
+                                marginBottom: 3
                             }} source={require('../icon/phone-b.png')}></Image>
-                            <Text>{'12345678987'}</Text>
+                            <Text>{this.props.publisher.tel}</Text>
                         </View>
                     </View>
                     <View style={{
-                        width:width-70,
-                        height:35,
-                        flexDirection:'row',
-                        justifyContent:'flex-start',
-                        alignItems:'center'
+                        width: width - 70,
+                        height: 35,
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
                     }}>
                         <View style={{
-                            width:width/2-35,
-                            height:35,
-                            flexDirection:'row',
-                            justifyContent:'flex-start',
-                            alignItems:'center'
+                            width: width / 2 - 35,
+                            height: 35,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center'
                         }}>
-                            <Text style={{marginLeft:10}}>{'技术部 总监'}</Text>
+                            <Text style={{ marginLeft: 10 }}>{this.props.publisher.offer}</Text>
                         </View>
                         <View style={{
-                            width:width/2-35,
-                            height:35,
-                            flexDirection:'row',
-                            justifyContent:'flex-start',
-                            alignItems:'center'
+                            width: width / 2 - 35,
+                            height: 35,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center'
                         }}>
                             <Image style={{
-                                marginRight:10,
+                                marginRight: 10,
                             }} source={require('../icon/envelope-16-b.png')}></Image>
-                            <Text>{'12345678987'}</Text>
+                            <Text>{this.props.publisher.email}</Text>
                         </View>
                     </View>
                 </View>
@@ -113,5 +113,5 @@ Personmsg.propTypes = {
 
 }
 Personmsg.defaultProps = {
-    
+
 }

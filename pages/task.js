@@ -31,6 +31,7 @@ export default class Task extends Component {
 
         };
     }
+
     menu () {
         const {navigator} = this.props;
             if(navigator){
@@ -57,13 +58,19 @@ export default class Task extends Component {
                         backgroundColor={'rgb(43,130,163)'}
                         elevation={0} />
                     <ScrollView>
-                        <Taskmessage name={'任务a'} />
+                        <Taskmessage
+                            name={this.props.taskInfo.taskName} 
+                            date={this.props.taskInfo.taskEnd} 
+                            project={this.props.taskInfo.project.name} 
+                            stars={this.props.taskInfo.securityLv} 
+                            time={this.props.taskInfo.workload}
+                            id={this.props.taskInfo.id}/>
                         <Bolddivider dividerheight={1} />
-                        <Personmsg />
+                        <Personmsg publisher={this.props.taskInfo.taskPublisher}/>
                         <Bolddivider />
                         <Process />
                         <Bolddivider />
-                        <Selfsay title={'任务说明'} />
+                        <Selfsay title={'任务说明'} introduce={this.props.taskInfo.taskContent}/>
                         <Bolddivider />
                         <Comment1 />
                     </ScrollView>

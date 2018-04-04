@@ -18,7 +18,7 @@ export default class Selfsay extends React.Component {
         super(props);
         this.state = {
             editable:false,
-            introduce:'如果你无法简洁的表达你的想法，那只说明你好不够了解它。--阿尔伯特·爱因斯坦',
+            introduce:this.props.introduce,
             theight:0
         };
     }
@@ -107,4 +107,5 @@ Selfsay.propTypes = {
 Selfsay.defaultProps = {
     title:'个人介绍',
     source:null,
+    introduce:"如果你无法简洁的表达你的想法，那只说明你好不够了解它。--阿尔伯特·爱因斯坦",
 }

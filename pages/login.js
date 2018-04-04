@@ -11,7 +11,8 @@ import {
     Easing,
     Image,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    AsyncStorage
 } from 'react-native';
 import TopBar from '../components/topbar';
 import Settingitem from '../components/settingitem';
@@ -30,20 +31,129 @@ export default class Login extends Component {
             placeholderu: '请输入账号',
             placeholderp: '请输入密码',
         };
+        // AsyncStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMCIsImNyZWF0ZWQiOjE1MjI4MjE3NjUzNTAsImV4cCI6MTUyMzQyNjU2NX0.jMBQum8-12gaTLAZzTLTXdzQXUuaxB9gugagYbKx-ZzKohLuQIwueDQK0Gs55YC45tXhtfO5Zz2t2jmVTJ0rjA", (error) => {
+        //     if (error) {
+
+        //     } else {
+
+        //     }
+        // })
+        AsyncStorage.getItem('token', (error, result) => {
+            if (!error) {
+                var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
+                fetch(url, {
+                    "method": 'POST',
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + result
+                    },
+                })
+                    .then(
+                        (res) => {
+                            if (res.ok) {
+                                return res.json()
+                            } else {
+                                throw new Error('BIG_ERROR')
+                            }
+
+                        }
+                    ).then((PromiseValue) => {
+                        console.log(PromiseValue)
+                        const { navigator } = this.props;
+                        if (navigator) {
+                            navigator.push({
+                                name: 'Main',
+                                component: Main,
+                                params: {
+                                    mineInfo: PromiseValue
+                                }
+                            });
+                        }
+                    })
+                    .catch((error) => { // 错误处理
+
+                    })
+                    .done();
+            }
+        })
     }
+
     Jump_to_main() {
         if (this.state.user == '') {
             this.refs.textinputu.setNativeProps({ placeholderTextColor: 'red' })
         } else if (this.state.password == '') {
             this.refs.textinputp.setNativeProps({ placeholderTextColor: 'red' })
         } else {
-            const { navigator } = this.props;
-            if (navigator) {
-                navigator.push({
-                    name: 'Main',
-                    component: Main
-                });
-            }
+            var url = 'http://120.78.74.75:8080/demo/auth'; // 接口url
+            fetch(url, {
+                "method": 'POST',
+                "headers": {
+                    "Content-Type": "application/json",
+                },
+                "body": JSON.stringify({
+                    "username": this.state.user,
+                    "password": this.state.password,
+                })
+            }).then(
+                (res) => {
+                    if (res.ok) {
+                        // console.log(res.json());
+                        return res.json()
+                    } else {
+                        throw new Error('BIG_ERROR')
+                    }
+
+                }
+            ).then((PromiseValue) => {
+                console.log(PromiseValue)
+                AsyncStorage.setItem("token", PromiseValue.token, (error) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(PromiseValue.token)
+
+                        var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
+                        fetch(url, {
+                            "method": 'GET',
+                            "headers": {
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + PromiseValue.token
+                            },
+                        })
+                            .then(
+                                (res) => {
+                                    if (res.ok) {
+                                        return res.json()
+                                    } else {
+                                        throw new Error('BIG_ERROR')
+                                    }
+
+                                }
+                            ).then((PromiseValue) => {
+                                console.log(PromiseValue)
+                                const { navigator } = this.props;
+                                if (navigator) {
+                                    navigator.push({
+                                        name: 'Main',
+                                        component: Main,
+                                        params: {
+                                            mineInfo: PromiseValue
+                                        }
+                                    });
+                                }
+                            })
+                            .catch((error) => { // 错误处理
+
+                            })
+                            .done();
+
+                    }
+                })
+            })
+                .catch((error) => { // 错误处理
+
+                })
+                .done();
         }
     }
     render() {

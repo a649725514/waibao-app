@@ -61,13 +61,18 @@ export default class Selfmessage extends Component {
                         title={''}
                         backgroundColor={'rgb(43,130,163)'}
                         elevation={0} />
-                    <Selfmessagecard />
+                    <Selfmessagecard 
+                        name={this.props.mineInfo.name}
+                        company={this.props.mineInfo.company}
+                        phone={this.props.mineInfo.tel}
+                        email={this.props.mineInfo.email}
+                    />
                     <Bolddivider />
                     <Selfsay source={require('../icon/pencil-b.png')} />
                     <Bolddivider />
-                    <Workexp />
+                    <Workexp/>
                     <Bolddivider />
-                    <Workskill source={require('../icon/plus-b.png')} />
+                    <Workskill source={require('../icon/plus-b.png')} skills={this.props.mineInfo.skills}/>
                     <Bolddivider />
                     <Workproject />
                     <Bolddivider />

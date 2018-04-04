@@ -8,6 +8,7 @@ import {
     TextInput,
     StyleSheet,
     Modal,
+    Button
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Bolddivider from './bolddivider';
@@ -34,16 +35,16 @@ export default class Workskill extends React.Component {
     sure() {
         this.onRequestClose();
         this.setState({
-            skill:'',
-            value:0
+            skill: '',
+            value: 0
         })
         //this.add = 1
     }
     cancel() {
         this.onRequestClose();
         this.setState({
-            skill:'',
-            value:0
+            skill: '',
+            value: 0
         })
     }
     onRequestClose() {
@@ -114,51 +115,51 @@ export default class Workskill extends React.Component {
                                     justifyContent: 'center',
                                     alignItems: 'flex-start'
                                 }}>
-                                    <Text style={{ color: 'black', marginLeft: 20, fontSize: 18 }}>{'熟练度：'+Math.ceil(this.state.value*100)+'%'}</Text>
+                                    <Text style={{ color: 'black', marginLeft: 20, fontSize: 18 }}>{'熟练度：' + Math.ceil(this.state.value * 100) + '%'}</Text>
                                 </View>
                                 <Slider
                                     value={this.state.value}
                                     onValueChange={(value) => this.setState({ value })}
-                                    style={{marginLeft:20,width:width-100, height: 40}}
+                                    style={{ marginLeft: 20, width: width - 100, height: 40 }}
                                     disabled={false}
                                     thumbTintColor={'rgb(0,122,255)'} />
                             </View>
                             <Bolddivider dividerheight={1} />
                             <View style={{
-                                height:49,
-                                width:width-60,
-                                flexDirection:'row'
+                                height: 49,
+                                width: width - 60,
+                                flexDirection: 'row'
                             }}>
                                 <View style={{
-                                    height:49,
-                                    width:width/2-30,
-                                    borderRightColor:'#e9e9e9',
-                                    borderRightWidth:1,
-                                    alignItems:'center',
-                                    justifyContent:'center'
+                                    height: 49,
+                                    width: width / 2 - 30,
+                                    borderRightColor: '#e9e9e9',
+                                    borderRightWidth: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
                                 }}>
                                     <TouchableOpacity style={{
-                                        height:49,
-                                        width:width/2-30,
-                                        alignItems:'center',
-                                        justifyContent:'center'
-                                    }} onPress={()=>this.sure()}>
-                                    <Text>{'确定'}</Text>
+                                        height: 49,
+                                        width: width / 2 - 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }} onPress={() => this.sure()}>
+                                        <Text>{'确定'}</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{
-                                    height:49,
-                                    width:width/2-30,
-                                    alignItems:'center',
-                                    justifyContent:'center'
+                                    height: 49,
+                                    width: width / 2 - 30,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
                                 }}>
                                     <TouchableOpacity style={{
-                                        height:49,
-                                        width:width/2-30,
-                                        alignItems:'center',
-                                        justifyContent:'center'
-                                    }} onPress={()=>this.cancel()}>
-                                    <Text>{'取消'}</Text>
+                                        height: 49,
+                                        width: width / 2 - 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }} onPress={() => this.cancel()}>
+                                        <Text>{'取消'}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -204,15 +205,27 @@ export default class Workskill extends React.Component {
                     alignItems: 'flex-start',
                     margin: 20
                 }}>
-                    <Text style={{ color: 'black' }}>{'PPT'}</Text>
-                    <ProgressBar borderRadius={3} progress={0.8} width={width - 40} />
-                    <Text style={{ color: 'black', marginTop: 10 }}>{'墨刀'}</Text>
-                    <ProgressBar borderRadius={3} progress={0.6} width={width - 40} />
-                    <Text style={{ color: 'black', marginTop: 10 }}>{'Visio'}</Text>
-                    <ProgressBar borderRadius={3} progress={0.65} width={width - 40} />
-                    <Text style={{ color: 'black', marginTop: 10 }}>{'MindManager'}</Text>
-                    <ProgressBar borderRadius={3} progress={0.5} width={width - 40} />
-                    
+                               <View style={{
+                   width:width,
+                   //height:Math.max(65,this.state.theight),
+                   justifyContent:'flex-start',
+                   alignItems:'center',
+                   flexDirection:'row',
+                   //margin:20
+               }}>
+                    {
+                        this.props.skills.map((skill) => {
+                            console.log(skill)
+                            return (
+                                <View style={{margin:20,marginRight:10}}>
+
+                                <Button style={{ margin: 20 }} type="danger" title={skill}>{skill} </Button>
+                                </View>
+
+                            )
+                        })
+                    }
+                    </View>
                 </View>
             </View>
         );
@@ -225,4 +238,5 @@ Workskill.propTypes = {
 Workskill.defaultProps = {
     title: '技能',
     source: null,
+    skills: []
 }
