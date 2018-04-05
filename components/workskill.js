@@ -205,26 +205,25 @@ export default class Workskill extends React.Component {
                     alignItems: 'flex-start',
                     margin: 20
                 }}>
-                               <View style={{
-                   width:width,
-                   //height:Math.max(65,this.state.theight),
-                   justifyContent:'flex-start',
-                   alignItems:'center',
-                   flexDirection:'row',
-                   //margin:20
-               }}>
-                    {
-                        this.props.skills.map((skill) => {
-                            console.log(skill)
-                            return (
-                                <View style={{margin:20,marginRight:10}}>
+                    <View style={{
+                        width: width,
+                        //height:Math.max(65,this.state.theight),
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        //margin:20
+                    }}>
+                        {
+                            this.props.skills.map((skill) => {
+                                return (
+                                    <View style={{ margin: 20, marginRight: 10 }}>
 
-                                <Button style={{ margin: 20 }} type="danger" title={skill}>{skill} </Button>
-                                </View>
+                                        <Button style={{ margin: 20 }} type="danger" title={skill}>{skill} </Button>
+                                    </View>
 
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
                     </View>
                 </View>
             </View>

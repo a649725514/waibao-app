@@ -46,7 +46,8 @@ export default class Main extends Component {
             menuleft: new Animated.Value(0),
             menuleft1: new Animated.Value(0),
             dataSource: ds.cloneWithRows(data),
-            db: data
+            db: data,
+            mineInfo: {}
         };
         AsyncStorage.getItem('token', (error, result) => {
             if (!error) {
@@ -73,6 +74,37 @@ export default class Main extends Component {
                             dataSource: this.state.dataSource.cloneWithRows(PromiseValue),
                             db: PromiseValue,
                         });
+                    })
+                    .catch((error) => { // 错误处理
+
+                    })
+                    .done();
+            }
+        })
+        AsyncStorage.getItem('token', (error, result) => {
+            if (!error) {
+
+                var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
+                fetch(url, {
+                    "method": 'GET',
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + result
+                    },
+                })
+                    .then(
+                        (res) => {
+                            if (res.ok) {
+                                return res.json()
+                            } else {
+                                throw new Error('BIG_ERROR')
+                            }
+
+                        }
+                    ).then((PromiseValue) => {
+                        this.setState({
+                            mineInfo: PromiseValue
+                        })
                     })
                     .catch((error) => { // 错误处理
 
@@ -220,8 +252,8 @@ export default class Main extends Component {
             navigator.push({
                 name: 'Selfmessage',
                 component: Selfmessage,
-                params:{
-                    mineInfo: this.props.mineInfo
+                params: {
+                    mineInfo: this.state.mineInfo
                 }
             });
         }
@@ -274,10 +306,10 @@ export default class Main extends Component {
                             backgroundColor: 'white',
                             left: this.state.menuleft1.interpolate({ inputRange: [0, 1], outputRange: [0, 0.7 * width] })
                         }}>
-                            <Selfcard 
-                                name={this.props.mineInfo.name}
-                                company={this.props.mineInfo.company}
-                                source={{uri: 'http://120.78.74.75:8010/'+this.props.mineInfo.workNumber+'/1.jpg'}}/>
+                            <Selfcard
+                                name={this.state.mineInfo.name}
+                                company={this.state.mineInfo.company}
+                                source={{ uri: 'http://120.78.74.75:8010/' + this.state.mineInfo.workNumber + '/1.jpg' }} />
                             <Menulist source={require('../icon/user-blue.png')} content={'个人信息'} press={() => this.Jump_to_selfmessage()} />
                             <Menulist source={require('../icon/copy-blue.png')} content={'我的协议'} press={() => this.Jump_to_agreement()} />
                             <Menulist source={require('../icon/cog-blue.png')} content={'设置'} press={() => this.Jump_to_setting()} />

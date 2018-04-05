@@ -6,7 +6,8 @@ import {
     Dimensions,
     Image,
     TextInput,
-    ListView
+    ListView,
+    AsyncStorage
 } from 'react-native';
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -17,78 +18,108 @@ import Tasklist from './tasklist';
 import Bolddivider from './bolddivider';
 const color = ['rgb(239,27,43)', 'rgb(255,152,42)', 'rgb(68,68,68)'];
 const colors = ['rgb(0,148,226)','black'];
-const data = [
-    {
-        pic: require('../pic/05.png'),
-        comment: '做的不错！',
-        time: '3小时前',
-        name: '甲',
-        count: 1
-    },
-    {
-        pic: require('../pic/04.png'),
-        comment: '谢谢！',
-        time: '1小时前',
-        name: '乙',
-        count: 2
-    },
-    {
-        pic: require('../pic/03.png'),
-        comment: '/笑',
-        time: '3分中前',
-        name: '丙',
-        count: 3
-    },
-];
-const data1 = [
-    {
-        name: '甲',
-        from: '技术部 职员',
-        pic: require('../pic/04.png'),
-        level: 0
-    },
-    {
-        name: '乙',
-        from: '产品部 产品经理',
-        pic: require('../pic/05.png'),
-        level: 1
-    },
-    {
-        name: '甲',
-        from: 'A外包公司',
-        pic: require('../pic/06.png'),
-        level: 2
-    },
-    {
-        name: '甲',
-        from: 'C外包公司',
-        pic: require('../pic/07.png'),
-        level: 2
-    },
-]
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
 export default class Comment1 extends React.Component {
     constructor(props) {
         super(props);
+
+        var data = [
+        ];
+        var data1 = [
+        ]
+        var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
         this.state = {
             placeholder: '我也说一句',
             comment: '',
             dataSource: ds.cloneWithRows(data),
             dataSource1: ds.cloneWithRows(data1),
+            db: data,
+            db1: data1,
             height1: data.length * 90 + 140,
             height2: 0,
             color1:colors[0],
             color2:colors[1],
         }
     }
-    renderPage = (rowData) => {
+
+    componentDidMount() {
+        AsyncStorage.getItem('token', (error, result) => {
+            if (!error) {
+
+                var url = 'http://120.78.74.75:8080/demo/s/getUsersOfTask?taskid='+this.props.id; // 接口url
+                fetch(url, {
+                    "method": 'GET',
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + result
+                    },
+                })
+                    .then(
+                        (res) => {
+                            if (res.ok) {
+                                return res.json()
+                            } else {
+                                throw new Error('BIG_ERROR')
+                            }
+
+                        }
+                    ).then((PromiseValue) => {
+                        this.setState({
+                            dataSource1: this.state.dataSource.cloneWithRows(PromiseValue),
+                            db1: PromiseValue,
+                            height1: PromiseValue * 90 + 140,
+                        });                        
+                    })
+                    .catch((error) => { // 错误处理
+
+                    })
+                    .done();
+            }
+        })
+
+        AsyncStorage.getItem('token', (error, result) => {
+            if (!error) {
+
+                var url = 'http://120.78.74.75:8080/demo/msg/getmsgOfTask?taskid='+this.props.id; // 接口url
+                fetch(url, {
+                    "method": 'POST',
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + result
+                    },
+                })
+                    .then(
+                        (res) => {
+                            if (res.ok) {
+                                return res.json()
+                            } else {
+                                throw new Error('BIG_ERROR')
+                            }
+
+                        }
+                    ).then((PromiseValue) => {
+                        this.setState({
+                            dataSource: this.state.dataSource.cloneWithRows(PromiseValue.reverse()),
+                            db: PromiseValue.reverse(),
+                        });                        
+                    })
+                    .catch((error) => { // 错误处理
+
+                    })
+                    .done();
+            }
+        })
+    }
+    renderPage = (rowData, sectionId, rowId) => {
         return (
-            <Commentitem pic={rowData.pic} comment={rowData.comment} time={rowData.time} name={rowData.name} count={rowData.count} />
+            <Commentitem pic={rowData.pic} comment={rowData.context} time={rowData.time.substring(0, 10)} name={rowData.userName} count={rowId} />
         )
     }
     renderPage1 = (rowData) => {
         return (
-            <Memberitem name={rowData.name} from={rowData.from} pic={rowData.pic} color={color[rowData.level]} />
+            <Memberitem name={rowData.name} from={rowData.department +' '+ rowData.offer} pic={rowData.pic}  />
+            // color={color[rowData.level]}
         )
     }
     renderSeparator = () => {
@@ -102,7 +133,7 @@ export default class Comment1 extends React.Component {
         this.refs.member.setNativeProps({ borderBottomColor:'#e9e9e9' })
         this.setState({ color1:colors[0],color2:colors[1] })
         this.setState({
-            height1: data.length * 90 + 140,
+            height1: this.state.db.length * 90 + 140,
             height2: 0,
         })
     }
@@ -113,7 +144,7 @@ export default class Comment1 extends React.Component {
         this.setState({ color1:colors[1],color2:colors[0]})
         this.setState({
             height1: 0,
-            height2: data1.length * 60 + 10,
+            height2: this.state.db1.length * 60 + 10,
         })
     }
     render() {
@@ -220,7 +251,7 @@ export default class Comment1 extends React.Component {
                     </View>
                     <View style={{
                         width: width,
-                        height: data.length * 90 + 10,
+                        height: this.state.db.length * 90 + 10,
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginTop: 20,

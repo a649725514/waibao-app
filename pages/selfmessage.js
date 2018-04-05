@@ -74,8 +74,8 @@ export default class Selfmessage extends Component {
                     <Bolddivider />
                     <Workskill source={require('../icon/plus-b.png')} skills={this.props.mineInfo.skills}/>
                     <Bolddivider />
-                    <Workproject />
-                    <Bolddivider />
+                    {/* <Workproject />
+                    <Bolddivider /> */}
                 </ScrollView> 
             </View>
         );

@@ -31,49 +31,51 @@ export default class Login extends Component {
             placeholderu: '请输入账号',
             placeholderp: '请输入密码',
         };
-        // AsyncStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMCIsImNyZWF0ZWQiOjE1MjI4MjE3NjUzNTAsImV4cCI6MTUyMzQyNjU2NX0.jMBQum8-12gaTLAZzTLTXdzQXUuaxB9gugagYbKx-ZzKohLuQIwueDQK0Gs55YC45tXhtfO5Zz2t2jmVTJ0rjA", (error) => {
-        //     if (error) {
+        AsyncStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMCIsImNyZWF0ZWQiOjE1MjI4MTE0MzM3MDAsImV4cCI6MTUyMzQxNjIzM30.jPO7MZWvrEQnLL8M-O2yn_GONx1X-YvFvEI2yMIIj4W-agNq53fXJRD9Fe46HygTsVD1ubvkKprOMCOWZgA-DQ", (error) => {
+            if (error) {
 
-        //     } else {
+            } else {
 
-        //     }
-        // })
-        AsyncStorage.getItem('token', (error, result) => {
-            if (!error) {
-                var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
-                fetch(url, {
-                    "method": 'POST',
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + result
-                    },
-                })
-                    .then(
-                        (res) => {
-                            if (res.ok) {
-                                return res.json()
-                            } else {
-                                throw new Error('BIG_ERROR')
-                            }
+                AsyncStorage.getItem('token', (error, result) => {
+                    if (!error) {
 
-                        }
-                    ).then((PromiseValue) => {
-                        console.log(PromiseValue)
-                        const { navigator } = this.props;
-                        if (navigator) {
-                            navigator.push({
-                                name: 'Main',
-                                component: Main,
-                                params: {
-                                    mineInfo: PromiseValue
+                        var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
+                        fetch(url, {
+                            "method": 'GET',
+                            "headers": {
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + result
+                            },
+                        })
+                            .then(
+                                (res) => {
+                                    if (res.ok) {
+                                        return res.json()
+                                    } else {
+                                        throw new Error('BIG_ERROR')
+                                    }
+
                                 }
-                            });
-                        }
-                    })
-                    .catch((error) => { // 错误处理
+                            ).then((PromiseValue) => {
+                                console.log(PromiseValue)
+                                const { navigator } = this.props;
+                                if (navigator) {
+                                    navigator.push({
+                                        name: 'Main',
+                                        component: Main,
+                                        params: {
+                                            mineInfo: PromiseValue
+                                        }
+                                    });
+                                }
+                            })
+                            .catch((error) => { // 错误处理
 
-                    })
-                    .done();
+                            })
+                            .done();
+                    }
+                })
+
             }
         })
     }
@@ -97,7 +99,6 @@ export default class Login extends Component {
             }).then(
                 (res) => {
                     if (res.ok) {
-                        // console.log(res.json());
                         return res.json()
                     } else {
                         throw new Error('BIG_ERROR')
@@ -105,12 +106,9 @@ export default class Login extends Component {
 
                 }
             ).then((PromiseValue) => {
-                console.log(PromiseValue)
                 AsyncStorage.setItem("token", PromiseValue.token, (error) => {
                     if (error) {
-                        console.log(error)
                     } else {
-                        console.log(PromiseValue.token)
 
                         var url = 'http://120.78.74.75:8080/demo/s/getInfoOfCurrentUser'; // 接口url
                         fetch(url, {
@@ -130,7 +128,6 @@ export default class Login extends Component {
 
                                 }
                             ).then((PromiseValue) => {
-                                console.log(PromiseValue)
                                 const { navigator } = this.props;
                                 if (navigator) {
                                     navigator.push({

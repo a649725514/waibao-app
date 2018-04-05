@@ -82,5 +82,5 @@ Commentitem.propTypes = {
     color:PropTypes.string.isRequired,
 }
 Commentitem.defaultProps = {
-    
+    color: 'rgb(239,27,43)'
 }
