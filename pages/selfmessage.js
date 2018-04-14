@@ -66,6 +66,7 @@ export default class Selfmessage extends Component {
                         company={this.props.mineInfo.company}
                         phone={this.props.mineInfo.tel}
                         email={this.props.mineInfo.email}
+                        pic={{ uri:'http://120.78.74.75:8010/'+this.props.mineInfo.workNumber+'/1.jpg'}}
                     />
                     <Bolddivider />
                     <Selfsay source={require('../icon/pencil-b.png')} />

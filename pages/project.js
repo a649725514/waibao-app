@@ -31,6 +31,7 @@ export default class Project extends Component {
         this.state = {
 
         };
+        console.log(this.props.publisher)
     }
     menu () {
         const {navigator} = this.props;
@@ -71,7 +72,7 @@ export default class Project extends Component {
                         <Bolddivider dividerheight={1} />
                         <Skillmsg />
                         <Bolddivider dividerheight={1} />
-                        <Personmsg />
+                        <Personmsg publisher={this.props.projectInfo.taskPublisher} />
                         <Bolddivider />
                         <Process />
                         <Bolddivider />

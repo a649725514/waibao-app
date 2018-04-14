@@ -21,32 +21,46 @@ var height = Dimensions.get('window').height;
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2,sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
 const data = [
     {
-        name: '任务a',
-        star: 2,
-        time: 8,
-        start_date:'3.1',
-        end_date:'4.1'
+        name: '集成中心',
+        star: 0,
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
     },
     {
-        name: '任务c',
-        star: 3,
-        time: 8,
-        start_date:'2.11',
-        end_date:'4.1'
+        name: '人脸识别需求分析',
+        star: 0,
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
     },
     {
-        name: '任务d',
-        star: 2,
-        time: 8,
-        start_date:'2.1',
-        end_date:'4.3'
+        name: '人脸识别模块开发',
+        star: 0,
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
     },
     {
-        name: '任务e',
+        name: '日志开发',
+        star: 1,
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
+    },
+    {
+        name: '数据中心',
         star: 2,
-        time: 8,
-        start_date:'1.8',
-        end_date:'3.1'
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
+    },
+    {
+        name: '运维',
+        star: 1,
+        time: 5,
+        start_date:'2018-03-25',
+        end_date:'2018-04-25'
     },
 ]
 export default class Projectlist extends React.Component {

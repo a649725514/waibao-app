@@ -40,7 +40,7 @@ export default class Personmsg extends React.Component {
                         width: 50,
                         height: 50,
                         borderRadius: 25,
-                    }} source={require('../pic/01.png')}></Image>
+                    }} source={{ uri:'http://120.78.74.75:8010/'+this.props.publisher.workNumber+'/1.jpg'}}></Image>
                 </View>
                 <View style={{
                     width: width - 70,
@@ -113,5 +113,14 @@ Personmsg.propTypes = {
 
 }
 Personmsg.defaultProps = {
-
+    publisher:{
+        "workNumber": "10000",
+            "name": "马化腾",
+            "company": "杭电",
+            "tel": "18100178922",
+            "email": "18100178922@qq.com",
+            "department": "研发部",
+            "offer": "架构师",
+            "status": 1
+    }
 }

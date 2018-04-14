@@ -84,7 +84,7 @@ Projectmessage.propTypes = {
 
 }
 Projectmessage.defaultProps = {
-    name:'项目B',
+    name:'虹软智包平台',
     source:null,
     date:'2018-7-30',
     mounth:5,
