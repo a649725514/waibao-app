@@ -40,7 +40,7 @@ export default class Selfmessagecard extends React.Component {
                             width:height*0.16,
                             height:height*0.16,
                             borderRadius:height*0.08,
-                        }}></Image>
+                        }} source={this.props.pic}></Image>
                     </View>
                </View> 
                <View style={{
@@ -126,5 +126,6 @@ Selfmessagecard.defaultProps = {
     name : '王小红',
     company : 'D外包公司',
     phone : '123-4567-8912',
-    email : '12389@qq.com'
+    email : '12389@qq.com',
+    pic : null,
 }
